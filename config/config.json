@@ -1,4 +1,3 @@
 {
-    "disabled_cogs": [],
-    "my value": 1
+    "disabled_cogs": ["economy"]
 }

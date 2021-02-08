@@ -1,0 +1,8 @@
+[2021-02-05 01:15:09] [INFO    ] - Websocket closed with 1006, attempting a reconnect. (gateway.py)
+[2021-02-05 01:15:09] [INFO    ] - Got a request to RESUME the websocket. (client.py)
+[2021-02-05 01:15:10] [INFO    ] - Shard ID None has sent the RESUME payload. (gateway.py)
+[2021-02-05 01:15:10] [INFO    ] - Shard ID None has successfully RESUMED session 689d53d981db136427ab07639e9e7ea3 under trace ["gateway-prd-main-9lhs",{"micros":5818,"calls":["discord-sessions-prd-2-17",{"micros":10}]}]. (gateway.py)
+[2021-02-05 01:21:24] [INFO    ] - Cleaning up tasks. (client.py)
+[2021-02-05 01:21:24] [INFO    ] - Cleaning up after 1 tasks. (client.py)
+[2021-02-05 01:21:24] [INFO    ] - All tasks finished cancelling. (client.py)
+[2021-02-05 01:21:24] [INFO    ] - Closing the event loop. (client.py)

@@ -8,6 +8,7 @@ authors = ["Your Name <you@example.com>"]
 python = "^3.9"
 discord = "^1.0.1"
 python-decouple = "^3.4"
+mongoengine = "^0.22.1"
 
 [tool.poetry.dev-dependencies]
 setuptools = "^53.0.0"

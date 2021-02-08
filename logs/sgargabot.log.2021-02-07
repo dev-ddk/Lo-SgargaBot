@@ -1,0 +1,3 @@
+[2021-02-07 00:55:20] [INFO    ] - Got a request to RESUME the websocket. (client.py)
+[2021-02-07 00:55:21] [INFO    ] - Shard ID None has sent the RESUME payload. (gateway.py)
+[2021-02-07 00:55:21] [INFO    ] - Shard ID None has successfully RESUMED session 52de7967985d02acbefac3891890736e under trace ["gateway-prd-main-mfdt",{"micros":1179,"calls":["discord-sessions-prd-2-30",{"micros":14}]}]. (gateway.py)
