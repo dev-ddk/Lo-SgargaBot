@@ -50,7 +50,7 @@ class Singleton(type):
     A metaclass implementing the Singleton pattern, allowing only one instance with type `type` to exist.
     """
 
-    _instances = {}
+    _instances: dict[type, object] = {}
 
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:

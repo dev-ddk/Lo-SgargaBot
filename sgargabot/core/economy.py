@@ -1,7 +1,6 @@
 import discord
 from typing import Tuple
-from sgargabot.models.status import EconomyTransactionStatus
-from sgargabot.models.enums import EconomyTransactionType
+from sgargabot.models.enums import EconomyTXNType
 
 
 def check_balance(member: discord.Member) -> int:

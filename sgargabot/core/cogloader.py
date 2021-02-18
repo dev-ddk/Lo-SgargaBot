@@ -36,5 +36,5 @@ class LoadedCogs:
         return all_cogs
 
     def reload_cog(self, cog_name: str):
-        if cog_name not in self.load_cogs:
+        if cog_name not in self.loaded_cogs:
             raise InexistentCogError(cog_name)

@@ -10,8 +10,8 @@ class InexistentCogError(Exception):
 
 
 class TooManyCallsError(Exception):
-    def __init__(self, *args, time_remaining: datetime.timedelta = 0, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, message, time_remaining: datetime.timedelta = datetime.timedelta(seconds=0)):
+        super().__init__(message)
         self.time_remaining = time_remaining
 
 
