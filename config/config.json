@@ -1,4 +1,17 @@
 {
-    "disabled_cogs": [],
-    "daily_amount": 15
+    "disabled_cogs": ["testing"],
+    "daily_amount": 15,
+    "superenalotto_ticket_price": 5,
+    "superenalotto_init_prize": 1000,
+    "superenalotto_channels": [
+        812054124660391987,
+        807597338846691349
+    ],
+    "superenalotto_split": {
+        "2": 40,
+        "3": 12.8,
+        "4": 4.2,
+        "5": 17.2,
+        "6": 25.8
+    }
 }

@@ -4,6 +4,7 @@ from discord.ext import commands
 
 import sgargabot.utils.config as config
 from sgargabot.core.cogloader import LoadedCogs
+from async_cron.schedule import Scheduler
 
 logger = logging.getLogger(__name__)
 
@@ -17,6 +18,7 @@ class SgargaBot(commands.Bot):
             command_prefix=config.PREFIX,
             description=config.DESCRIPTION
         )
+        self.scheduler = Scheduler(locale=config.SCHEDULER_LOCALE)
         self.loaded_cogs = LoadedCogs(self)
         self.db = mongoengine.connect(
             db=config.MONGODB_MAIN,
@@ -31,6 +33,7 @@ class SgargaBot(commands.Bot):
             + "/?authSource=admin",
             tz_aware=True
         )
+        self.loop.create_task(self.scheduler.start())
 
     def run(self):
         super().run(config.BOT_TOKEN, bot=True, reconnect=True)

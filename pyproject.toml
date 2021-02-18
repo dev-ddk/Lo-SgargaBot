@@ -10,6 +10,7 @@ discord = "^1.0.1"
 python-decouple = "^3.4"
 mongoengine = "^0.22.1"
 bandit = "^1.7.0"
+async-cron = "^1.6.2"
 
 [tool.poetry.dev-dependencies]
 setuptools = "^53.0.0"

@@ -7,6 +7,7 @@ import datetime
 from zoneinfo import ZoneInfo
 
 from sgargabot.models.enums import LogLevel
+from sgargabot.utils.abc import Singleton
 
 logger = logging.getLogger(__name__)
 
@@ -16,6 +17,7 @@ BOT_TOKEN = config("BOT_TOKEN")
 CONFIG_FOLDER = config("CONFIG_FOLDER", default="config/")
 CONFIG_FILE = config("CONFIG_FILE", default="config.json")
 TIMEZONE = config("TIMEZONE", default="Europe/Rome")
+SCHEDULER_LOCALE = config("SCHEDULER_LOCALE", default="en_US")
 
 ## Logging Env Vars
 
@@ -40,22 +42,6 @@ TZ_ZONEINFO = ZoneInfo(TIMEZONE)
 
 PREFIX = "$"
 DESCRIPTION = "Nelle notti senza luna, starnutendo davanti ad uno specchio, c'è una probabilità del 5% che Achille Frigeri balzi fuori da una cassapanca lì vicina"
-
-# Base Classes
-
-
-class Singleton(type):
-    """Singleton metaclass
-
-    A metaclass implementing the Singleton pattern, allowing only one instance with type `type` to exist.
-    """
-
-    _instances: dict[type, object] = {}
-
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-        return cls._instances[cls]
 
 
 # Configuration for the Bot's Functionalities
