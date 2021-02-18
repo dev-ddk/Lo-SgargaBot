@@ -1,4 +1,5 @@
 import discord
+import datetime
 
 from sgargabot.models.enums import EconomyTXNType
 
@@ -7,7 +8,9 @@ class InexistentCogError(Exception):
         super().__init__(f'Attempted reloading unexistant cog: {cog_name}')
 
 class TooManyCallsError(Exception):
-    pass
+    def __init__(self, *args, time_remaining: datetime.timedelta = 0, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.time_remaining = time_remaining
 
 class DBException(Exception):
     pass

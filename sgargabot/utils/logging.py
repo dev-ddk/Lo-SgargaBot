@@ -7,7 +7,7 @@ import sgargabot.utils.config as config
 from sgargabot.models.enums import LogLevel
 
 def initialize_logging(log_level: LogLevel, log_file: str, log_folder: str):
-    formatter = logging.Formatter('[%(asctime)s] [%(levelname)-8s] - %(message)s (%(filename)s)', "%Y-%m-%d %H:%M:%S")
+    formatter = logging.Formatter('[%(asctime)s] [%(levelname)-8s] - %(message)s (%(filename)s:%(lineno)s', "%Y-%m-%d %H:%M:%S")
     root_logger = logging.getLogger()
     stream_handler = logging.StreamHandler()
     stream_handler.setLevel(log_level.value)

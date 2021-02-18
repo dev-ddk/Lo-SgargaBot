@@ -1,12 +1,18 @@
 import mongoengine
 import datetime
 
-class Call(mongoengine.EmbeddedDocument):
-    # Names are fully qualified names such as CogName.command_name
-    cmd = mongoengine.StringField()
-    time_called = mongoengine.DateTimeField(default=datetime.datetime.utcnow)
+import sgargabot.utils.config as config
 
-class UserCalled(mongoengine.Document):
+class UserCalled(mongoengine.DynamicDocument):
     user_id = mongoengine.IntField()
-    cmds_called = mongoengine.EmbeddedDocumentListField(Call)
 
+    def add_call(self, cmd):
+        cmd = to_field_name(cmd)
+        if not hasattr(self, cmd):
+            self.__setattr__(cmd, [datetime.datetime.now(config.TZ_ZONEINFO)])
+        else:
+            getattr(self, cmd).append(datetime.datetime.now(config.TZ_ZONEINFO))
+        self.save()
+
+def to_field_name(cmd):
+    return cmd.replace('.', '_')

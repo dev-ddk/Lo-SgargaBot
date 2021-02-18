@@ -2,6 +2,9 @@ from decouple import config
 import os
 import json
 import logging
+import datetime
+
+from zoneinfo import ZoneInfo
 
 from sgargabot.models.enums import LogLevel
 
@@ -12,6 +15,7 @@ logger = logging.getLogger(__name__)
 BOT_TOKEN = config('BOT_TOKEN')
 CONFIG_FOLDER = config('CONFIG_FOLDER', default='config/')
 CONFIG_FILE = config('CONFIG_FILE', default='config.json')
+TIMEZONE = config('TIMEZONE', default='Europe/Rome')
 
 ## Logging Env Vars
 
@@ -31,6 +35,8 @@ MONGODB_PASSWORD = config('MONGODB_PASSWORD')
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 COGS_DIR = os.path.join(BASE_DIR, 'sgargabot/cogs')
+
+TZ_ZONEINFO = ZoneInfo(TIMEZONE)
 
 PREFIX = '$'
 DESCRIPTION = "Nelle notti senza luna, starnutendo davanti ad uno specchio, c'è una probabilità del 5% che Achille Frigeri balzi fuori da una cassapanca lì vicina"
