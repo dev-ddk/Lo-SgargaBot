@@ -3,6 +3,7 @@ import datetime
 
 import sgargabot.utils.config as config
 
+
 class UserCalled(mongoengine.DynamicDocument):
     user_id = mongoengine.IntField()
 
@@ -14,5 +15,6 @@ class UserCalled(mongoengine.DynamicDocument):
             getattr(self, cmd).append(datetime.datetime.now(config.TZ_ZONEINFO))
         self.save()
 
+
 def to_field_name(cmd):
-    return cmd.replace('.', '_')
+    return cmd.replace(".", "_")

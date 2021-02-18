@@ -10,10 +10,12 @@ from sgargabot.core.sgargabot import SgargaBot
 
 logger = logging.getLogger(__name__)
 
+
 def main():
     initialize_logging(config.LOG_LEVEL, config.LOG_FILENAME, config.LOG_FOLDER)
     sgargabot = SgargaBot()
     sgargabot.run()
+
 
 if __name__ == "__main__":
     main()
