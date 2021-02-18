@@ -20,27 +20,15 @@ class Gambling(commands.Cog):
         self.bot = bot
 
     @commands.command(name="slotmachine", aliases=["slot"])
-    @callable_once_within(datetime.timedelta(seconds=5))
+    @callable_once_within(datetime.timedelta(hours=1))
     async def slotmachine(self, ctx):
         await ctx.send("You only have five calls!")
 
-    @commands.command(name="slutmachine", aliases=["slut"])
-    @callable_once_per_day
-    async def slutmachine(self, ctx):
-        await ctx.send("You called my, babyyyy")
-
-    @slutmachine.error
-    async def slutmachine_error(self, ctx, error):
-        logger.info(error, exc_info=True)
-        await ctx.send(
-            f"Sorry bro! You can only call this command once per day. Time before you can call this function {error.original.time_remaining}"
-        )
-
     @slotmachine.error
     async def slotmachine_error(self, ctx, error):
-        logger.info(error, exc_info=True)
+        logger.info(error)
         await ctx.send(
-            f"Sorry bro! You can only call this command two times every ten seconds. Time before you can call this function {error.original.time_remaining}"
+            f"Sorry bro! You can only call this command once every ten seconds. Time before you can call this function: {error.original.get_remaining_time()}"
         )
 
 

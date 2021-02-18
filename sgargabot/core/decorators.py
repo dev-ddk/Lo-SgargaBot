@@ -166,8 +166,7 @@ def callable_n_times_per_day(times: int):
                 results.first().add_call(f.__qualname__)
                 return await f(*args, **kwargs)
             elif date_to - last_n_calls[0].replace(
-                hour=0, minute=0, second=0, microsecond=0, tzinfo=config.TZ_ZONEINFO
-            ) > datetime.timedelta(hours=24):
+                hour=0, minute=0, second=0, microsecond=0) > datetime.timedelta(hours=24):
                 # Check if the n-th most recent call allows for another call
                 # It's important that is strictly less than, since the current call should be included in the count
                 results.update_one(**{"pop__" + field_name: -1})
@@ -176,8 +175,7 @@ def callable_n_times_per_day(times: int):
             else:
                 last_call = last_n_calls[0]
                 next_day = last_call.replace(
-                    hour=0, minute=0, second=0, microsecond=0, tzinfo=config.TZ_ZONEINFO
-                ) + datetime.timedelta(days=1)
+                    hour=0, minute=0, second=0, microsecond=0) + datetime.timedelta(days=1)
                 time_remaining = next_day - date_to
                 raise TooManyCallsError(
                     f"User {args[1].author.name} attempted to call the"

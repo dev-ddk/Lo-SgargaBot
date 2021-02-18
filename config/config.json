@@ -1,3 +1,4 @@
 {
-    "disabled_cogs": ["economy"]
+    "disabled_cogs": [],
+    "daily_amount": 15
 }

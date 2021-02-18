@@ -31,7 +31,7 @@ class LoadedCogs:
         for f in next(os.walk(config.COGS_DIR))[1]:
             if "main.py" in os.listdir(os.path.join(config.COGS_DIR, f)):
                 cog_name = "cogs." + f + ".main"
-                logger.info("Found loadable cog: {cog_name}")
+                logger.info(f"Found loadable cog: {cog_name}")
                 all_cogs.update({f: cog_name})
         return all_cogs
 

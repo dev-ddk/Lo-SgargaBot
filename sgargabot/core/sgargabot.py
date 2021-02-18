@@ -29,6 +29,7 @@ class SgargaBot(commands.Bot):
             + ":"
             + str(config.MONGODB_PORT)
             + "/?authSource=admin",
+            tz_aware=True
         )
 
     def run(self):
