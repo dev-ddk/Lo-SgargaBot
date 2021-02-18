@@ -52,7 +52,6 @@ class Economy(commands.Cog):
     async def transfer(self, ctx, member: discord.Member, amount: int):
         sender = Wallet.objects(user_id=ctx.author.id)
         recipient = Wallet.objects(user_id=member.id)
-        logger.info(amount)
         if sender.count() == 0:
             await ctx.send('Please register a new economy account')
         elif recipient.count() == 0:
@@ -64,7 +63,7 @@ class Economy(commands.Cog):
         elif sender.count() == 1 and recipient.count() == 1:
             if sender.first().amount < amount:
                 await ctx.send("Not enough funds to complete the transaction")
-            elif TXN.objects(sender=ctx.author.id, confirmed=False, cancelled=False).count() > 1:
+            elif TXN.objects(sender=ctx.author.id, confirmed=False, cancelled=False).count() == 1:
                 await ctx.send(f"You have a pending transaction. Please confirm or cancel it before attempting new transactions")
             else:
                 # Congrats to MongoDB for not offering atomic transactions without a sharded DB smh
