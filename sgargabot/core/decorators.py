@@ -4,7 +4,7 @@ import logging
 import datetime
 from zoneinfo import ZoneInfo
 from functools import wraps, partial
-from typing import Callable
+from typing import Callable, Tuple
 
 import sgargabot.utils.config as config
 from sgargabot.models.db import UserCalled, to_field_name
@@ -28,9 +28,10 @@ def callable_n_times(times: int):
             elif len_results == 0:
                 logger.debug("No previous entry")
                 # There is no entry for the user (User has never issued cmds)
+                res =  await f(*args, **kwargs)
                 user_called = UserCalled(user_id=user_id)
                 user_called.add_call(f.__qualname__)
-                return await f(*args, **kwargs)
+                return res
             elif not hasattr(results.first(), to_field_name(f.__qualname__)):
                 # User exists but has never called the command
                 logger.debug("No previous command call")
@@ -38,8 +39,10 @@ def callable_n_times(times: int):
             elif len(getattr(results.first(), to_field_name(f.__qualname__))) < times:
                 # The number of previous calls still allows for one more call.
                 # It's important that is strictly less than, since the current call should be included in the count
+                res = await f(*args, **kwargs)
+                logger.debug('aaaaaaa')
                 results.first().add_call(f.__qualname__)
-                return await f(*args, **kwargs)
+                return res
             else:
                 raise TooManyCallsError(
                     f"User {args[1].author.name} attempted to call the"
@@ -75,25 +78,29 @@ def callable_n_times_within(times: int, interval: datetime.timedelta):
                 )
             elif len_results == 0:
                 # There is no entry for the user (User has never issued cmds)
+                res = await f(*args, **kwargs)
                 user_called = UserCalled(user_id=user_id)
                 user_called.add_call(f.__qualname__)
-                return await f(*args, **kwargs)
+                return res
             elif not hasattr(results.first(), field_name):
+                res = await f(*args, **kwargs)
                 results.first().add_call(f.__qualname__)
-                return await f(*args, **kwargs)
+                return res
 
             last_n_calls = _get_last_n_calls(times, field_name, results)
 
             if len(last_n_calls) < times:
                 # Check if at least times called have been made: if not, then surely another call is possible
+                res = await f(*args, **kwargs)
                 results.first().add_call(f.__qualname__)
-                return await f(*args, **kwargs)
+                return res
             elif last_n_calls[0] < date_from:
                 # Check if the n-th most recent call allows for another call
                 # It's important that is strictly less than, since the current call should be included in the count
+                res = await f(*args, **kwargs)
                 results.update_one(**{"pop__" + field_name: -1})
                 results.first().add_call(f.__qualname__)
-                return await f(*args, **kwargs)
+                return res
             else:
                 time_remaining = interval - (date_to - last_n_calls[0])
                 raise TooManyCallsError(
@@ -152,26 +159,30 @@ def callable_n_times_per_day(times: int):
                 )
             elif len_results == 0:
                 # There is no entry for the user (User has never issued cmds)
+                res = await f(*args, **kwargs)
                 user_called = UserCalled(user_id=user_id)
                 user_called.add_call(f.__qualname__)
-                return await f(*args, **kwargs)
+                return res
             elif not hasattr(results.first(), field_name):
+                res = await f(*args, **kwargs)
                 results.first().add_call(f.__qualname__)
-                return await f(*args, **kwargs)
+                return res
 
             last_n_calls = _get_last_n_calls(times, field_name, results)
 
             if len(last_n_calls) < times:
                 # Check if at least times called have been made: if not, then surely another call is possible
+                res = await f(*args, **kwargs)
                 results.first().add_call(f.__qualname__)
-                return await f(*args, **kwargs)
+                return res
             elif date_to - last_n_calls[0].replace(
                 hour=0, minute=0, second=0, microsecond=0) > datetime.timedelta(hours=24):
                 # Check if the n-th most recent call allows for another call
                 # It's important that is strictly less than, since the current call should be included in the count
+                res = await f(*args, **kwargs)
                 results.update_one(**{"pop__" + field_name: -1})
                 results.first().add_call(f.__qualname__)
-                return await f(*args, **kwargs)
+                return res
             else:
                 last_call = last_n_calls[0]
                 next_day = last_call.replace(
